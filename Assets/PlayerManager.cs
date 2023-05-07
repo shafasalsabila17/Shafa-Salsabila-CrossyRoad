@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PlayerManager : MonoBehaviour
     Dictionary<int,Terrain> activeTerrainDict = new Dictionary<int, Terrain>(20);
     [SerializeField] private int travelDistance;
 
+    public UnityEvent <int,int> onUpdateTerrainLimit;
+
     private void Start()
     {
         
@@ -27,44 +30,36 @@ public class PlayerManager : MonoBehaviour
             if (terrain is Grass grass)
                 grass.SerTreePercentage(zPos < - 3 ? 1 : 0);
 
-;           terrain.Generate(size: horizontalSize);
+           terrain.Generate(size: horizontalSize);
 
             activeTerrainDict[zPos] = terrain;
         }
 
         for (int zPos = initialGrassCount; zPos < forwardViewDistance; zPos++)
         { 
-            var terrain = SpawnRandomTerrain(zPos); 
-
-;           terrain.Generate(size: horizontalSize);
-
-            activeTerrainDict[zPos] = terrain;
+            SpawnRandomTerrain(zPos); 
         }
-
-        SpawnRandomTerrain(0);
     }
 
         private Terrain SpawnRandomTerrain(int zPos)
         {
-            Terrain terrainCheck = null;
+            Terrain comparatorTerrain = null;
             int randomIndex;
-            Terrain terrain = null;
-
             for (int z = -1; z >= - 3; z--)
             {
                 var checkPos = zPos + z;
+                System.Type comparatorType = comparatorTerrain.GetType();
+                System.Type checkType = activeTerrainDict[checkPos].GetType();
 
-                if (terrainCheck == null)
+                if (comparatorTerrain == null)
                 {
-                 terrainCheck = activeTerrainDict[checkPos];
+                  comparatorTerrain = activeTerrainDict[checkPos];
                  continue;
                 }
-                else if (terrainCheck.GetType() != activeTerrainDict[checkPos].GetType())
+                else if (comparatorType != checkType)
                 {
                     randomIndex = Random.Range(0, terrainList.Count);
-                    terrain = Instantiate(terrainList[randomIndex]);
-                    terrain.transform.position = new Vector3(0, 0, zPos);
-                    return terrain;
+                    return SpawnTerrain(terrainList[randomIndex],zPos);
                 }
                 else
                 {
@@ -73,9 +68,12 @@ public class PlayerManager : MonoBehaviour
             }
             
             var candidateTerrain = new List<Terrain>(terrainList);
+            
             for (int i = 0; i < candidateTerrain.Count; i++)
             {
-                if (terrainCheck.GetType() == candidateTerrain[i].GetType())
+                System.Type comparatorType =  comparatorTerrain.GetType();
+                System.Type checkType = activeTerrainDict[i].GetType();
+                if (comparatorType == checkType)
                 {
                     candidateTerrain.Remove(candidateTerrain[i]);
                     break;
@@ -83,8 +81,15 @@ public class PlayerManager : MonoBehaviour
             }
 
             randomIndex = Random.Range(0, candidateTerrain.Count);
-            terrain = Instantiate(candidateTerrain[randomIndex]);
+            return SpawnTerrain(candidateTerrain[randomIndex], zPos);
+        }
+
+        public Terrain SpawnTerrain(Terrain terrain, int zPos)
+        {
+            terrain = Instantiate(terrain);
             terrain.transform.position = new Vector3 (0, 0 ,zPos);
+            terrain.Generate(horizontalSize);
+            activeTerrainDict[zPos] = terrain;
             return terrain;
         }
 
@@ -93,7 +98,20 @@ public class PlayerManager : MonoBehaviour
             if (targetPosition.z > travelDistance)
             {
                 travelDistance = Mathf.CeilToInt(targetPosition.z);
+                UpdateTerrain();
             }
-
         }
+
+        public void UpdateTerrain()
+        {
+            var destroyPos = travelDistance - 1 + backViewDistance;
+            Destroy(activeTerrainDict[destroyPos].gameObject);
+            activeTerrainDict.Remove(destroyPos);
+
+            var spawnPosition = travelDistance - 1 + forwardViewDistance;
+            SpawnRandomTerrain(spawnPosition);
+
+            onUpdateTerrainLimit.Invoke(horizontalSize, travelDistance + backViewDistance); 
+        }
+
 }
