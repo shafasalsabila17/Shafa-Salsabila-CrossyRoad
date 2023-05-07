@@ -25,7 +25,7 @@ public class PlayerManager : MonoBehaviour
             terrain.transform.position =  new Vector3(x: 0, y: 0, z: zPos);
 
             if (terrain is Grass grass)
-             grass.SerTreePercentage(zPos < - 1 ? 1 : 0);
+                grass.SerTreePercentage(zPos < - 3 ? 1 : 0);
 
 ;           terrain.Generate(size: horizontalSize);
 
@@ -35,8 +35,6 @@ public class PlayerManager : MonoBehaviour
         for (int zPos = initialGrassCount; zPos < forwardViewDistance; zPos++)
         { 
             var terrain = SpawnRandomTerrain(zPos); 
-
-            terrain.transform.position =  new Vector3(x: 0, y: 0, z: zPos);
 
 ;           terrain.Generate(size: horizontalSize);
 
@@ -84,16 +82,17 @@ public class PlayerManager : MonoBehaviour
                 }
             }
 
-            var randomIndex2 = Random.Range(0, candidateTerrain.Count);
-            var terrain2 = Instantiate(candidateTerrain[randomIndex2]);
-            terrain2.transform.position = new Vector3 (0, 0 ,zPos);
-            return terrain2;
+            randomIndex = Random.Range(0, candidateTerrain.Count);
+            terrain = Instantiate(candidateTerrain[randomIndex]);
+            terrain.transform.position = new Vector3 (0, 0 ,zPos);
+            return terrain;
         }
 
-        private void Update() {
-            if (duck.transform.position.z > travelDistance)
+        public void UpdateTravelDistance (Vector3 targetPosition)
+        {
+            if (targetPosition.z > travelDistance)
             {
-                travelDistance = Mathf.CeilToInt(duck.transform.position.z);
+                travelDistance = Mathf.CeilToInt(targetPosition.z);
             }
 
         }

@@ -14,7 +14,7 @@ public class Duck : MonoBehaviour
     [Range (0,1)] 
     float jumpHeight = 0.5f;
 
-    public UnityEvent OnJumpEnd;
+    public UnityEvent <Vector3> OnJumpEnd;
         
     void Update()
     {
@@ -55,12 +55,19 @@ public class Duck : MonoBehaviour
 
     public void Move(Vector3 direction)
     {
-       transform.DOJump(
-                        transform.position + direction,
-                        jumpHeight,
-                        1,
-                        moveDuration);
+       transform
+            .DOJump(
+            transform.position + direction,
+            jumpHeight,
+            1,
+            moveDuration)
+            .onComplete = BroadCastPositionOnJumpEnd;
                         
         transform.forward = direction;
+    }
+
+    private void BroadCastPositionOnJumpEnd()
+    {
+        OnJumpEnd.Invoke(transform.position);
     }
 }
