@@ -314,12 +314,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   offset: {x: 0, y: 0, z: 0}
   moveDuration: 0.3
+--- !u!1 &1125202219 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 371766754268755292, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+  m_PrefabInstance: {fileID: 371766755145560280}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1125202220
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1125202219}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.82366216, y: 1.7517445, z: 0.9640754}
+  m_Center: {x: 1.0011171, y: 0.889308, z: 0.05748015}
 --- !u!114 &1287456134 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 371766754268755294, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
   m_PrefabInstance: {fileID: 371766755145560280}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1125202219}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6518d9bf7eb02bc4f975f51c33713826, type: 3}
@@ -354,7 +372,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70a573955aec6b24daf638e2ce6ae9fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duck: {fileID: 1287456134}
   terrainList:
   - {fileID: 9218553066135973436, guid: fbede35ef78dc3f42bf23260f34bb134, type: 3}
   - {fileID: 723279646962167312, guid: d86a0deab322f2d4bbb5d0b0fd1a63bb, type: 3}
@@ -366,7 +383,19 @@ MonoBehaviour:
   travelDistance: 0
   onUpdateTerrainLimit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1287456134}
+        m_TargetAssemblyTypeName: Duck, Assembly-CSharp
+        m_MethodName: UpdateMoveLimit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1743630119
 Transform:
   m_ObjectHideFlags: 0
@@ -504,5 +533,32 @@ PrefabInstance:
       propertyPath: OnJumpEnd.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 371766753516813932, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766754067516734, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766754857269121, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766755113818539, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766755433001337, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766754158223631, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766753983802105, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766755177191359, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766753623658168, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766755496227698, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766754916903789, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766754831997543, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766754445208377, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766754018558542, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766754464354071, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766753576330113, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766755494038338, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766754122641322, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766754622087167, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766755204717109, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766754880695467, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766754254691497, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766754742372679, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766754752955420, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766754153758114, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766755589892623, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
+    - {fileID: 371766755269189877, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c5ad6d27fc04a6c48b024a1c3db862bc, type: 3}

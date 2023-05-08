@@ -5,7 +5,6 @@ using UnityEngine.Events;
 
 public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] Duck duck;
     [SerializeField] List<Terrain> terrainList;
     [SerializeField] int initialGrassCount = 5;
     [SerializeField] int horizontalSize;
@@ -39,8 +38,10 @@ public class PlayerManager : MonoBehaviour
         { 
             SpawnRandomTerrain(zPos); 
         }
+        
+        onUpdateTerrainLimit.Invoke(horizontalSize, travelDistance + backViewDistance);
     }
-
+        
         private Terrain SpawnRandomTerrain(int zPos)
         {
             Terrain comparatorTerrain = null;
@@ -48,15 +49,13 @@ public class PlayerManager : MonoBehaviour
             for (int z = -1; z >= - 3; z--)
             {
                 var checkPos = zPos + z;
-                System.Type comparatorType = comparatorTerrain.GetType();
-                System.Type checkType = activeTerrainDict[checkPos].GetType();
 
                 if (comparatorTerrain == null)
                 {
                   comparatorTerrain = activeTerrainDict[checkPos];
                  continue;
                 }
-                else if (comparatorType != checkType)
+                else if (comparatorTerrain.GetType() != activeTerrainDict[checkPos].GetType())
                 {
                     randomIndex = Random.Range(0, terrainList.Count);
                     return SpawnTerrain(terrainList[randomIndex],zPos);
@@ -71,9 +70,7 @@ public class PlayerManager : MonoBehaviour
             
             for (int i = 0; i < candidateTerrain.Count; i++)
             {
-                System.Type comparatorType =  comparatorTerrain.GetType();
-                System.Type checkType = activeTerrainDict[i].GetType();
-                if (comparatorType == checkType)
+                if (comparatorTerrain.GetType() == candidateTerrain[i].GetType())
                 {
                     candidateTerrain.Remove(candidateTerrain[i]);
                     break;
