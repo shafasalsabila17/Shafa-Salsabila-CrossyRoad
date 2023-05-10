@@ -7,18 +7,19 @@ using DG.Tweening;
 public class Coin : MonoBehaviour
 {
     [SerializeField] int value = 1;
-    [SerializeField, Range(0,10)] float rotationSpeed = 1;
+    [SerializeField, Range(0,10)] float rotationSpeed = 2;
 
     public int Value { get => value; }
 
     internal void Collected()
     {
         GetComponent<Collider>().enabled = false;
+        rotationSpeed *= 10;
         this.transform.DOJump(
             this.transform.position,
-            2,
+            1.5f,
             1,
-            1f
+            0.6f
         ).onComplete = SelfDestruct;
 
     }
